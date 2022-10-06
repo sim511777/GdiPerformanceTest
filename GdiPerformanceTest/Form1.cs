@@ -13,8 +13,9 @@ namespace GdiPerformanceTest {
     public partial class Form1 : Form {
         public Form1() {
             InitializeComponent();
-            ChangeDoubleBuffering();
         }
+
+        Size szPan = Size.Empty;
 
         private void chkDoubleBuffered_CheckedChanged(object sender, EventArgs e) {
             ChangeDoubleBuffering();
@@ -27,7 +28,17 @@ namespace GdiPerformanceTest {
 
         private void pnlDraw_Paint(object sender, PaintEventArgs e) {
             var t0 = Util.GetTimeMs();
-            DrawItems(e.Graphics);
+
+            var drawItem = lbxDrawItem.SelectedIndex;
+            switch (drawItem) {
+                case 0: DrawString_Gdip(e.Graphics); break;
+                case 1: DrawRectangle_Gdip(e.Graphics); break;
+                case 2: FillRectangle_Gdip(e.Graphics); break;
+                case 3: DrawEllipse_Gdip(e.Graphics); break;
+                case 4: FillEllipse_Gdip(e.Graphics); break;
+                default: break;
+            }
+            
             var t1 = Util.GetTimeMs();
             string msg = 
                 $@"doubleBuffered : {chkDoubleBuffered.Checked}
@@ -38,25 +49,75 @@ time : {t1 - t0:f0}ms
             e.Graphics.DrawString(msg, Font, Brushes.Black, Point.Empty);
         }
 
-        private void DrawItems(Graphics g) {
-            string s = "gdi";
-            Font font = Font;
-            Brush brush = Brushes.Lime;
+        private void DrawLoop(Action<int, int> drawAction) {
             for (int y = 0; y < 800; y += 16) {
                 for (int x = 0; x < 1600; x += 16) {
-                    g.DrawString(s, font, brush, x + szPan.Width, y + szPan.Height);
+                    drawAction(x, y);
                 }
             }
         }
 
-        Size szPan = Size.Empty;
+        private void DrawString_Gdip(Graphics g) {
+            string s = "gdi";
+            Font font = Font;
+            Brush brush = Brushes.Lime;
+            Action<int, int> drawAction = (x, y) => {
+                g.DrawString(s, font, brush, x + szPan.Width, y + szPan.Height);
+            };
+            DrawLoop(drawAction);
+        }
+
+        private void DrawRectangle_Gdip(Graphics g) {
+            Pen pen = Pens.Lime;
+            Action<int, int> drawAction = (x, y) => {
+                g.DrawRectangle(pen, x + szPan.Width, y + szPan.Height, 14, 14);
+            };
+            DrawLoop(drawAction);
+        }
+
+        private void FillRectangle_Gdip(Graphics g) {
+            Brush br = Brushes.Lime;
+            Action<int, int> drawAction = (x, y) => {
+                g.FillRectangle(br, x + szPan.Width, y + szPan.Height, 14, 14);
+            };
+            DrawLoop(drawAction);
+        }
+
+        private void DrawEllipse_Gdip(Graphics g) {
+            Pen pen = Pens.Lime;
+            Action<int, int> drawAction = (x, y) => {
+                g.DrawEllipse(pen, x + szPan.Width, y + szPan.Height, 14, 14);
+            };
+            DrawLoop(drawAction);
+        }
+
+        private void FillEllipse_Gdip(Graphics g) {
+            Brush br = Brushes.Lime;
+            Action<int, int> drawAction = (x, y) => {
+                g.FillEllipse(br, x + szPan.Width, y + szPan.Height, 14, 14);
+            };
+            DrawLoop(drawAction);
+        }
+
         Point lastPos = Point.Empty;
         private void pnlDraw_MouseMove(object sender, MouseEventArgs e) {
             if (e.Button.HasFlag(MouseButtons.Left)) {
                 szPan += ((Size)e.Location - (Size)lastPos);
-                pnlDraw.Invalidate();
+                Redraw();
             }
             lastPos = e.Location;
+        }
+
+        private void Redraw() {
+            pnlDraw.Invalidate();
+        }
+
+        private void pnlDraw_Layout(object sender, LayoutEventArgs e) {
+
+        }
+
+        private void btnRedraw_Click(object sender, EventArgs e) {
+            Redraw();
         }
     }
 }

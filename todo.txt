@@ -1,10 +1,13 @@
 == todo ==
 ok 0. double buffered 옵션
 ok 0. 시각 측정
-0. 테스트 Draw
+ok 0. 테스트 Draw
 ok  - DrawString
-  - DrawRectangle
-  - FillRectangle
+ok  - DrawRectangle
+ok  - FillRectangle
+ok  - DrawEllipse
+ok  - FillEllipse
+0. e.Graphics에 그리는것과 Bitmap에 그리는것 성능 비교
 0. Graphics 속성 세부 변경
 0. Graphics 라이브러리
 ok 0. GDI+ 사용
@@ -15,7 +18,6 @@ ok 0. GDI+ 사용
   - SDL
   - SFML
   - OpenGL
-0. e.Graphics에 그리는것과 Bitmap에 그리는것 성능 비교
 0. Bitmap폰트 TrueType폰트 성능 비교
 
 == test result ==
