@@ -41,7 +41,8 @@ namespace GdiPerformanceTest {
             
             var t1 = Util.GetTimeMs();
             string msg = 
-                $@"doubleBuffered : {chkDoubleBuffered.Checked}
+                $@"DoubleBuffered : {chkDoubleBuffered.Checked}
+Use GDI instead GDI+ : {chkUseGDI.Checked}
 time : {t1 - t0:f0}ms
 ";
             var size = e.Graphics.MeasureString(msg, Font);
@@ -61,10 +62,18 @@ time : {t1 - t0:f0}ms
             string s = "gdi";
             Font font = Font;
             Brush brush = Brushes.Lime;
-            Action<int, int> drawAction = (x, y) => {
-                g.DrawString(s, font, brush, x + szPan.Width, y + szPan.Height);
-            };
-            DrawLoop(drawAction);
+            Color color = Color.Lime;
+            if (chkUseGDI.Checked) {
+                Action<int, int> drawAction = (x, y) => {
+                    TextRenderer.DrawText(g, s, font, new Point(x + szPan.Width, y + szPan.Height), color);
+                };
+                DrawLoop(drawAction);
+            } else {
+                Action<int, int> drawAction = (x, y) => {
+                    g.DrawString(s, font, brush, x + szPan.Width, y + szPan.Height);
+                };
+                DrawLoop(drawAction);
+            }
         }
 
         private void DrawRectangle_Gdip(Graphics g) {

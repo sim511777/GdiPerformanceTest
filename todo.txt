@@ -10,8 +10,8 @@ ok  - FillEllipse
 0. e.Graphics에 그리는것과 Bitmap에 그리는것 성능 비교
 0. Graphics 속성 세부 변경
 0. Graphics 라이브러리
-ok 0. GDI+ 사용
-  - GDI 사용
+ok  - GDI+ 사용
+ok  - GDI 사용
   - SKIA 사용
   - OPENCV 사용
   - CAIRO

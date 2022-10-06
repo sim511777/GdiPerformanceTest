@@ -24,16 +24,18 @@
         /// </summary>
         private void InitializeComponent() {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pnlDraw = new System.Windows.Forms.Panel();
-            this.chkDoubleBuffered = new System.Windows.Forms.CheckBox();
-            this.btnRedraw = new System.Windows.Forms.Button();
             this.lbxDrawItem = new System.Windows.Forms.ListBox();
+            this.btnRedraw = new System.Windows.Forms.Button();
+            this.chkDoubleBuffered = new System.Windows.Forms.CheckBox();
+            this.pnlDraw = new System.Windows.Forms.Panel();
+            this.chkUseGDI = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.chkUseGDI);
             this.panel1.Controls.Add(this.lbxDrawItem);
             this.panel1.Controls.Add(this.btnRedraw);
             this.panel1.Controls.Add(this.chkDoubleBuffered);
@@ -42,39 +44,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(154, 961);
             this.panel1.TabIndex = 0;
-            // 
-            // pnlDraw
-            // 
-            this.pnlDraw.BackColor = System.Drawing.Color.Gray;
-            this.pnlDraw.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlDraw.Location = new System.Drawing.Point(154, 0);
-            this.pnlDraw.Name = "pnlDraw";
-            this.pnlDraw.Size = new System.Drawing.Size(1630, 961);
-            this.pnlDraw.TabIndex = 1;
-            this.pnlDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlDraw_Paint);
-            this.pnlDraw.Layout += new System.Windows.Forms.LayoutEventHandler(this.pnlDraw_Layout);
-            this.pnlDraw.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlDraw_MouseMove);
-            // 
-            // chkDoubleBuffered
-            // 
-            this.chkDoubleBuffered.AutoSize = true;
-            this.chkDoubleBuffered.Location = new System.Drawing.Point(11, 40);
-            this.chkDoubleBuffered.Name = "chkDoubleBuffered";
-            this.chkDoubleBuffered.Size = new System.Drawing.Size(114, 16);
-            this.chkDoubleBuffered.TabIndex = 0;
-            this.chkDoubleBuffered.Text = "double buffering";
-            this.chkDoubleBuffered.UseVisualStyleBackColor = true;
-            this.chkDoubleBuffered.CheckedChanged += new System.EventHandler(this.chkDoubleBuffered_CheckedChanged);
-            // 
-            // btnRedraw
-            // 
-            this.btnRedraw.Location = new System.Drawing.Point(11, 11);
-            this.btnRedraw.Name = "btnRedraw";
-            this.btnRedraw.Size = new System.Drawing.Size(124, 23);
-            this.btnRedraw.TabIndex = 1;
-            this.btnRedraw.Text = "Redraw";
-            this.btnRedraw.UseVisualStyleBackColor = true;
-            this.btnRedraw.Click += new System.EventHandler(this.btnRedraw_Click);
             // 
             // lbxDrawItem
             // 
@@ -90,6 +59,49 @@
             this.lbxDrawItem.Name = "lbxDrawItem";
             this.lbxDrawItem.Size = new System.Drawing.Size(120, 88);
             this.lbxDrawItem.TabIndex = 2;
+            // 
+            // btnRedraw
+            // 
+            this.btnRedraw.Location = new System.Drawing.Point(11, 11);
+            this.btnRedraw.Name = "btnRedraw";
+            this.btnRedraw.Size = new System.Drawing.Size(124, 23);
+            this.btnRedraw.TabIndex = 1;
+            this.btnRedraw.Text = "Redraw";
+            this.btnRedraw.UseVisualStyleBackColor = true;
+            this.btnRedraw.Click += new System.EventHandler(this.btnRedraw_Click);
+            // 
+            // chkDoubleBuffered
+            // 
+            this.chkDoubleBuffered.AutoSize = true;
+            this.chkDoubleBuffered.Location = new System.Drawing.Point(11, 40);
+            this.chkDoubleBuffered.Name = "chkDoubleBuffered";
+            this.chkDoubleBuffered.Size = new System.Drawing.Size(114, 16);
+            this.chkDoubleBuffered.TabIndex = 0;
+            this.chkDoubleBuffered.Text = "double buffering";
+            this.chkDoubleBuffered.UseVisualStyleBackColor = true;
+            this.chkDoubleBuffered.CheckedChanged += new System.EventHandler(this.chkDoubleBuffered_CheckedChanged);
+            // 
+            // pnlDraw
+            // 
+            this.pnlDraw.BackColor = System.Drawing.Color.Gray;
+            this.pnlDraw.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlDraw.Location = new System.Drawing.Point(154, 0);
+            this.pnlDraw.Name = "pnlDraw";
+            this.pnlDraw.Size = new System.Drawing.Size(1630, 961);
+            this.pnlDraw.TabIndex = 1;
+            this.pnlDraw.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlDraw_Paint);
+            this.pnlDraw.Layout += new System.Windows.Forms.LayoutEventHandler(this.pnlDraw_Layout);
+            this.pnlDraw.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlDraw_MouseMove);
+            // 
+            // chkUseGDI
+            // 
+            this.chkUseGDI.AutoSize = true;
+            this.chkUseGDI.Location = new System.Drawing.Point(11, 156);
+            this.chkUseGDI.Name = "chkUseGDI";
+            this.chkUseGDI.Size = new System.Drawing.Size(119, 16);
+            this.chkUseGDI.TabIndex = 3;
+            this.chkUseGDI.Text = "GDI instead GDI+";
+            this.chkUseGDI.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -113,6 +125,7 @@
         private System.Windows.Forms.CheckBox chkDoubleBuffered;
         private System.Windows.Forms.Button btnRedraw;
         private System.Windows.Forms.ListBox lbxDrawItem;
+        private System.Windows.Forms.CheckBox chkUseGDI;
     }
 }
 
