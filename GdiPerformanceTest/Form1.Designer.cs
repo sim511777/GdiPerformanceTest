@@ -24,17 +24,19 @@
         /// </summary>
         private void InitializeComponent() {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkUseGDI = new System.Windows.Forms.CheckBox();
             this.lbxDrawItem = new System.Windows.Forms.ListBox();
             this.btnRedraw = new System.Windows.Forms.Button();
             this.chkDoubleBuffered = new System.Windows.Forms.CheckBox();
             this.pnlDraw = new System.Windows.Forms.Panel();
-            this.chkUseGDI = new System.Windows.Forms.CheckBox();
+            this.chkUseBackBuffer = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.chkUseBackBuffer);
             this.panel1.Controls.Add(this.chkUseGDI);
             this.panel1.Controls.Add(this.lbxDrawItem);
             this.panel1.Controls.Add(this.btnRedraw);
@@ -44,6 +46,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(154, 961);
             this.panel1.TabIndex = 0;
+            // 
+            // chkUseGDI
+            // 
+            this.chkUseGDI.AutoSize = true;
+            this.chkUseGDI.Location = new System.Drawing.Point(11, 156);
+            this.chkUseGDI.Name = "chkUseGDI";
+            this.chkUseGDI.Size = new System.Drawing.Size(119, 16);
+            this.chkUseGDI.TabIndex = 3;
+            this.chkUseGDI.Text = "GDI instead GDI+";
+            this.chkUseGDI.UseVisualStyleBackColor = true;
             // 
             // lbxDrawItem
             // 
@@ -55,7 +67,7 @@
             "FillRectangle",
             "DrawEllipse",
             "FillEllipse"});
-            this.lbxDrawItem.Location = new System.Drawing.Point(11, 62);
+            this.lbxDrawItem.Location = new System.Drawing.Point(11, 40);
             this.lbxDrawItem.Name = "lbxDrawItem";
             this.lbxDrawItem.Size = new System.Drawing.Size(120, 88);
             this.lbxDrawItem.TabIndex = 2;
@@ -73,7 +85,7 @@
             // chkDoubleBuffered
             // 
             this.chkDoubleBuffered.AutoSize = true;
-            this.chkDoubleBuffered.Location = new System.Drawing.Point(11, 40);
+            this.chkDoubleBuffered.Location = new System.Drawing.Point(11, 134);
             this.chkDoubleBuffered.Name = "chkDoubleBuffered";
             this.chkDoubleBuffered.Size = new System.Drawing.Size(114, 16);
             this.chkDoubleBuffered.TabIndex = 0;
@@ -93,15 +105,15 @@
             this.pnlDraw.Layout += new System.Windows.Forms.LayoutEventHandler(this.pnlDraw_Layout);
             this.pnlDraw.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlDraw_MouseMove);
             // 
-            // chkUseGDI
+            // chkUseBackBuffer
             // 
-            this.chkUseGDI.AutoSize = true;
-            this.chkUseGDI.Location = new System.Drawing.Point(11, 156);
-            this.chkUseGDI.Name = "chkUseGDI";
-            this.chkUseGDI.Size = new System.Drawing.Size(119, 16);
-            this.chkUseGDI.TabIndex = 3;
-            this.chkUseGDI.Text = "GDI instead GDI+";
-            this.chkUseGDI.UseVisualStyleBackColor = true;
+            this.chkUseBackBuffer.AutoSize = true;
+            this.chkUseBackBuffer.Location = new System.Drawing.Point(11, 178);
+            this.chkUseBackBuffer.Name = "chkUseBackBuffer";
+            this.chkUseBackBuffer.Size = new System.Drawing.Size(88, 16);
+            this.chkUseBackBuffer.TabIndex = 4;
+            this.chkUseBackBuffer.Text = "Back Buffer";
+            this.chkUseBackBuffer.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -126,6 +138,7 @@
         private System.Windows.Forms.Button btnRedraw;
         private System.Windows.Forms.ListBox lbxDrawItem;
         private System.Windows.Forms.CheckBox chkUseGDI;
+        private System.Windows.Forms.CheckBox chkUseBackBuffer;
     }
 }
 
