@@ -24,12 +24,11 @@
         /// </summary>
         private void InitializeComponent() {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.chkUseGDI = new System.Windows.Forms.CheckBox();
+            this.chkUseBackBuffer = new System.Windows.Forms.CheckBox();
             this.lbxDrawItem = new System.Windows.Forms.ListBox();
             this.btnRedraw = new System.Windows.Forms.Button();
             this.chkDoubleBuffered = new System.Windows.Forms.CheckBox();
             this.pnlDraw = new System.Windows.Forms.Panel();
-            this.chkUseBackBuffer = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -37,7 +36,6 @@
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.chkUseBackBuffer);
-            this.panel1.Controls.Add(this.chkUseGDI);
             this.panel1.Controls.Add(this.lbxDrawItem);
             this.panel1.Controls.Add(this.btnRedraw);
             this.panel1.Controls.Add(this.chkDoubleBuffered);
@@ -47,15 +45,15 @@
             this.panel1.Size = new System.Drawing.Size(154, 961);
             this.panel1.TabIndex = 0;
             // 
-            // chkUseGDI
+            // chkUseBackBuffer
             // 
-            this.chkUseGDI.AutoSize = true;
-            this.chkUseGDI.Location = new System.Drawing.Point(11, 156);
-            this.chkUseGDI.Name = "chkUseGDI";
-            this.chkUseGDI.Size = new System.Drawing.Size(119, 16);
-            this.chkUseGDI.TabIndex = 3;
-            this.chkUseGDI.Text = "GDI instead GDI+";
-            this.chkUseGDI.UseVisualStyleBackColor = true;
+            this.chkUseBackBuffer.AutoSize = true;
+            this.chkUseBackBuffer.Location = new System.Drawing.Point(11, 178);
+            this.chkUseBackBuffer.Name = "chkUseBackBuffer";
+            this.chkUseBackBuffer.Size = new System.Drawing.Size(88, 16);
+            this.chkUseBackBuffer.TabIndex = 4;
+            this.chkUseBackBuffer.Text = "Back Buffer";
+            this.chkUseBackBuffer.UseVisualStyleBackColor = true;
             // 
             // lbxDrawItem
             // 
@@ -63,6 +61,7 @@
             this.lbxDrawItem.ItemHeight = 12;
             this.lbxDrawItem.Items.AddRange(new object[] {
             "DrawString",
+            "DrawString(GDI)",
             "DrawRectangle",
             "FillRectangle",
             "DrawEllipse",
@@ -105,16 +104,6 @@
             this.pnlDraw.Layout += new System.Windows.Forms.LayoutEventHandler(this.pnlDraw_Layout);
             this.pnlDraw.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlDraw_MouseMove);
             // 
-            // chkUseBackBuffer
-            // 
-            this.chkUseBackBuffer.AutoSize = true;
-            this.chkUseBackBuffer.Location = new System.Drawing.Point(11, 178);
-            this.chkUseBackBuffer.Name = "chkUseBackBuffer";
-            this.chkUseBackBuffer.Size = new System.Drawing.Size(88, 16);
-            this.chkUseBackBuffer.TabIndex = 4;
-            this.chkUseBackBuffer.Text = "Back Buffer";
-            this.chkUseBackBuffer.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -137,7 +126,6 @@
         private System.Windows.Forms.CheckBox chkDoubleBuffered;
         private System.Windows.Forms.Button btnRedraw;
         private System.Windows.Forms.ListBox lbxDrawItem;
-        private System.Windows.Forms.CheckBox chkUseGDI;
         private System.Windows.Forms.CheckBox chkUseBackBuffer;
     }
 }

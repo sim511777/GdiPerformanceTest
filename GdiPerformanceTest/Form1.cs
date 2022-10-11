@@ -40,37 +40,42 @@ namespace GdiPerformanceTest {
             var t0 = Util.GetTimeMs();
 
             if (chkUseBackBuffer.Checked) {
-                using (var bmpG = Graphics.FromImage(bmp)) {
-                    bmpG.Clear(pnlDraw.BackColor);
-                    DrawStuffs(bmpG);
+                using (var g = Graphics.FromImage(bmp)) {
+                    g.Clear(pnlDraw.BackColor);
+                    var drawItem = lbxDrawItem.SelectedIndex;
+                    switch (drawItem) {
+                        case 0: DrawString_Gdip(g); break;
+                        case 2: DrawRectangle_Gdip(g); break;
+                        case 3: FillRectangle_Gdip(g); break;
+                        case 4: DrawEllipse_Gdip(g); break;
+                        case 5: FillEllipse_Gdip(g); break;
+                        default: break;
+                    }
                 }
                 e.Graphics.DrawImage(bmp, 0, 0);
             } else {
-                DrawStuffs(e.Graphics);
+                var g = e.Graphics;
+                var drawItem = lbxDrawItem.SelectedIndex;
+                switch (drawItem) {
+                    case 0: DrawString_Gdip(g); break;
+                    case 1: DrawString_Gdi(g); break;   // 이상하게 Bmp.Graphics에 그리면 뻗음
+                    case 2: DrawRectangle_Gdip(g); break;
+                    case 3: FillRectangle_Gdip(g); break;
+                    case 4: DrawEllipse_Gdip(g); break;
+                    case 5: FillEllipse_Gdip(g); break;
+                    default: break;
+                }
             }
 
             var t1 = Util.GetTimeMs();
             string msg =
-                $@"DoubleBuffered : {chkDoubleBuffered.Checked}
-Use GDI instead GDI+ : {chkUseGDI.Checked}
+$@"DoubleBuffered : {chkDoubleBuffered.Checked}
 time : {t1 - t0:f0}ms
 zoom : {zoomLevel}, pan : {szPan}
 ";
             var size = e.Graphics.MeasureString(msg, Font);
             e.Graphics.FillRectangle(Brushes.White, new RectangleF(Point.Empty, size));
             e.Graphics.DrawString(msg, Font, Brushes.Black, Point.Empty);
-        }
-
-        private void DrawStuffs(Graphics g) {
-            var drawItem = lbxDrawItem.SelectedIndex;
-            switch (drawItem) {
-                case 0: DrawString_Gdip(g); break;
-                case 1: DrawRectangle_Gdip(g); break;
-                case 2: FillRectangle_Gdip(g); break;
-                case 3: DrawEllipse_Gdip(g); break;
-                case 4: FillEllipse_Gdip(g); break;
-                default: break;
-            }
         }
 
         private void DrawLoop(Action<int, int> drawAction) {
@@ -87,17 +92,21 @@ zoom : {zoomLevel}, pan : {szPan}
             Font font = Font;
             Brush brush = Brushes.Lime;
             Color color = Color.Lime;
-            if (chkUseGDI.Checked) {
-                Action<int, int> drawAction = (x, y) => {
-                    TextRenderer.DrawText(g, s, font, new Point(x, y), color);
-                };
-                DrawLoop(drawAction);
-            } else {
-                Action<int, int> drawAction = (x, y) => {
-                    g.DrawString(s, font, brush, x, y);
-                };
-                DrawLoop(drawAction);
-            }
+            Action<int, int> drawAction = (x, y) => {
+                g.DrawString(s, font, brush, x, y);
+            };
+            DrawLoop(drawAction);
+        }
+
+        private void DrawString_Gdi(Graphics g) {
+            string s = "gdi";
+            Font font = Font;
+            Brush brush = Brushes.Lime;
+            Color color = Color.Lime;
+            Action<int, int> drawAction = (x, y) => {
+                TextRenderer.DrawText(g, s, font, new Point(x, y), color);
+            };
+            DrawLoop(drawAction);
         }
 
         private void DrawRectangle_Gdip(Graphics g) {
