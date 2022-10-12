@@ -88,7 +88,7 @@ zoom : {zoomLevel}, pan : {szPan}
         }
 
         private void DrawString_Gdip(Graphics g) {
-            string s = "gdi";
+            string s = "G";
             Font font = Font;
             Brush brush = Brushes.Lime;
             Color color = Color.Lime;
@@ -99,7 +99,7 @@ zoom : {zoomLevel}, pan : {szPan}
         }
 
         private void DrawString_Gdi(Graphics g) {
-            string s = "gdi";
+            string s = "G";
             Font font = Font;
             Brush brush = Brushes.Lime;
             Color color = Color.Lime;
