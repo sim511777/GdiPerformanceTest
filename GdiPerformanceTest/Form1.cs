@@ -37,7 +37,7 @@ namespace GdiPerformanceTest {
         }
 
         private void pnlDraw_Paint(object sender, PaintEventArgs e) {
-            var t0 = Util.GetTimeMs();
+            var t0 = Util.GetTime();
 
             if (chkUseBackBuffer.Checked) {
                 using (var g = Graphics.FromImage(bmp)) {
@@ -67,10 +67,16 @@ namespace GdiPerformanceTest {
                 }
             }
 
-            var t1 = Util.GetTimeMs();
+            var t1 = Util.GetTime();
+            var dt = t1 - t0;
+            var fps = 1 / dt;
+            var dtms = dt * 1000;
+            var drawPerUs = dt * 1000 * 1000 / 5000;
             string msg =
 $@"DoubleBuffered : {chkDoubleBuffered.Checked}
-time : {t1 - t0:f0}ms
+time : {dtms:f0}ms
+fps : {fps:f0}
+time per draw : {drawPerUs:f0}us
 zoom : {zoomLevel}, pan : {szPan}
 ";
             var size = e.Graphics.MeasureString(msg, Font);
