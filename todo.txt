@@ -12,6 +12,7 @@ ok  - FillEllipse
 0. Graphics 라이브러리
 ok  - GDI+ 사용
 ok  - GDI 사용
+Native GDI 사용
   - SKIA 사용
   - OPENCV 사용
   - CAIRO

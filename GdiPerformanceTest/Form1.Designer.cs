@@ -48,7 +48,7 @@
             // chkUseBackBuffer
             // 
             this.chkUseBackBuffer.AutoSize = true;
-            this.chkUseBackBuffer.Location = new System.Drawing.Point(11, 178);
+            this.chkUseBackBuffer.Location = new System.Drawing.Point(11, 200);
             this.chkUseBackBuffer.Name = "chkUseBackBuffer";
             this.chkUseBackBuffer.Size = new System.Drawing.Size(88, 16);
             this.chkUseBackBuffer.TabIndex = 4;
@@ -62,13 +62,14 @@
             this.lbxDrawItem.Items.AddRange(new object[] {
             "DrawString",
             "DrawString(GDI)",
+            "DrawString(NativeGDI)",
             "DrawRectangle",
             "FillRectangle",
             "DrawEllipse",
             "FillEllipse"});
             this.lbxDrawItem.Location = new System.Drawing.Point(11, 40);
             this.lbxDrawItem.Name = "lbxDrawItem";
-            this.lbxDrawItem.Size = new System.Drawing.Size(120, 88);
+            this.lbxDrawItem.Size = new System.Drawing.Size(120, 100);
             this.lbxDrawItem.TabIndex = 2;
             // 
             // btnRedraw
@@ -84,7 +85,7 @@
             // chkDoubleBuffered
             // 
             this.chkDoubleBuffered.AutoSize = true;
-            this.chkDoubleBuffered.Location = new System.Drawing.Point(11, 134);
+            this.chkDoubleBuffered.Location = new System.Drawing.Point(11, 156);
             this.chkDoubleBuffered.Name = "chkDoubleBuffered";
             this.chkDoubleBuffered.Size = new System.Drawing.Size(114, 16);
             this.chkDoubleBuffered.TabIndex = 0;

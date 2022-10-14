@@ -42,29 +42,12 @@ namespace GdiPerformanceTest {
             if (chkUseBackBuffer.Checked) {
                 using (var g = Graphics.FromImage(bmp)) {
                     g.Clear(pnlDraw.BackColor);
-                    var drawItem = lbxDrawItem.SelectedIndex;
-                    switch (drawItem) {
-                        case 0: DrawString_Gdip(g); break;
-                        case 2: DrawRectangle_Gdip(g); break;
-                        case 3: FillRectangle_Gdip(g); break;
-                        case 4: DrawEllipse_Gdip(g); break;
-                        case 5: FillEllipse_Gdip(g); break;
-                        default: break;
-                    }
+                    DrawBranch(g);
                 }
                 e.Graphics.DrawImage(bmp, 0, 0);
             } else {
                 var g = e.Graphics;
-                var drawItem = lbxDrawItem.SelectedIndex;
-                switch (drawItem) {
-                    case 0: DrawString_Gdip(g); break;
-                    case 1: DrawString_Gdi(g); break;   // 이상하게 Bmp.Graphics에 그리면 뻗음
-                    case 2: DrawRectangle_Gdip(g); break;
-                    case 3: FillRectangle_Gdip(g); break;
-                    case 4: DrawEllipse_Gdip(g); break;
-                    case 5: FillEllipse_Gdip(g); break;
-                    default: break;
-                }
+                DrawBranch(g);
             }
 
             var t1 = Util.GetTime();
@@ -84,6 +67,21 @@ zoom : {zoomLevel}, pan : {szPan}
             e.Graphics.DrawString(msg, Font, Brushes.Black, Point.Empty);
         }
 
+        private void DrawBranch(Graphics g) {
+            var drawItem = lbxDrawItem.SelectedIndex;
+            switch (drawItem) {
+                case 0: DrawString_Gdip(g); break;
+                case 1: DrawString_Gdi(g); break;   // 이상하게 Bmp.Graphics에 그리면 뻗음
+                case 2: DrawString_NativeGdi_DrawString(g); break;
+                case 3: DrawString_NativeGdi_DrawTransparentText(g); break;
+                case 4: DrawRectangle_Gdip(g); break;
+                case 5: FillRectangle_Gdip(g); break;
+                case 6: DrawEllipse_Gdip(g); break;
+                case 7: FillEllipse_Gdip(g); break;
+                default: break;
+            }
+        }
+
         private void DrawLoop(Action<int, int> drawAction) {
             int step = (int)Math.Pow(2, zoomLevel);
             for (int y = 0; y < 50; y += 1) {
@@ -98,10 +96,7 @@ zoom : {zoomLevel}, pan : {szPan}
             Font font = Font;
             Brush brush = Brushes.Lime;
             Color color = Color.Lime;
-            Action<int, int> drawAction = (x, y) => {
-                g.DrawString(s, font, brush, x, y);
-            };
-            DrawLoop(drawAction);
+            DrawLoop((x, y) => g.DrawString(s, font, brush, x, y));
         }
 
         private void DrawString_Gdi(Graphics g) {
@@ -113,6 +108,36 @@ zoom : {zoomLevel}, pan : {szPan}
                 TextRenderer.DrawText(g, s, font, new Point(x, y), color);
             };
             DrawLoop(drawAction);
+        }
+
+        private void DrawString_NativeGdi_DrawString(Graphics g) {
+            string s = "G";
+            Font font = Font;
+            Brush brush = Brushes.Lime;
+            Color color = Color.Lime;
+            using (NativeTextRenderer nt = new NativeTextRenderer(g)) {
+                Action<int, int> drawAction = (x, y) => {
+                    var size = nt.MeasureString(s, font);
+                    nt.DrawString(s, font, color, new Point(x, y));
+                };
+                DrawLoop(drawAction);
+                nt.Dispose();
+            }
+        }
+
+        private void DrawString_NativeGdi_DrawTransparentText(Graphics g) {
+            string s = "G";
+            Font font = Font;
+            Brush brush = Brushes.Lime;
+            Color color = Color.Lime;
+            using (NativeTextRenderer nt = new NativeTextRenderer(g)) {
+                Action<int, int> drawAction = (x, y) => {
+                    var size = nt.MeasureString(s, font);
+                    nt.DrawTransparentText(s, font, color, new Point(x, y), size);
+                };
+                DrawLoop(drawAction);
+                nt.Dispose();
+            }
         }
 
         private void DrawRectangle_Gdip(Graphics g) {
@@ -163,7 +188,9 @@ zoom : {zoomLevel}, pan : {szPan}
         private void pnlDraw_Layout(object sender, LayoutEventArgs e) {
             if (bmp != null)
                 bmp.Dispose();
-            bmp = new Bitmap(pnlDraw.Width, pnlDraw.Height, PixelFormat.Format32bppPArgb);
+            var g = pnlDraw.CreateGraphics();
+            bmp = new Bitmap(pnlDraw.Width, pnlDraw.Height, g);
+            g.Dispose();
         }
 
         private void btnRedraw_Click(object sender, EventArgs e) {
